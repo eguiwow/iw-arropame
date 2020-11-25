@@ -8,7 +8,6 @@ class Etiqueta(models.Model):
  def __str__(self):
         return self.nombre
 
-
 # Clase Oferta: ofertas que se aplican a los diferentes precios
 class Oferta(models.Model): # TODO: a esta hay que darle una vuelta porq no sé muy bien cómo lo queremos tener
         DESCUENTOS = (      # Mirar documentación de 'choices' en https://docs.djangoproject.com/en/3.1/topics/db/models/
@@ -36,7 +35,6 @@ class Coleccion(models.Model):
 # Clase Talla
 class Talla(models.Model):
         talla = models.CharField(max_length=10)
-
 
 # Clase Item: cada artículo que se ponga a la venta será un Item
 class Item(models.Model):
@@ -72,11 +70,18 @@ class Producto(models.Model):
 
 #  usuario(admin, invitado, usuario) --> TODO : mirar clase User (permissions / groups)  https://docs.djangoproject.com/en/3.1/topics/auth/ 
 
-# class Usuario(models.User): No sé si va aquí o en django.contrib.auth
-
-# class Carrito(models.Model):
-        #lista de items
+class Carrito(models.Model):
+        productos = models.ManyToManyField(Producto, blank=True)
         #1 por cada usuario
+
+# class Usuario(models.User): No sé si va aquí o en django.contrib.auth
+class Cliente(models.Model):
+        nombre = models.CharField(max_length=50)
+        mail = models.EmailField(unique=True)
+        tarjeta = models.IntegerField()
+        
+        carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
+
 
         #        TALLAS = (      # Mirar documentación de 'choices' en https://docs.djangoproject.com/en/3.1/topics/db/models/
         # ('XS', 'Extra Small'), 
