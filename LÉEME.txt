@@ -1,0 +1,19 @@
+#################### ResortSHOP ####################
+
+El proyecto se basa en una tienda de ropa online.
+
+
+Para poder hacer funcionar el proyecto, conviene crear dos usuarios. 
+(por defecto el u: admin, p:admin debería valer para hacer las pruebas)
+
+Para crear un usuario que tenga permiso de administracion, se hace desde la consola (createsuperuser)
+Para crear un usuario normal, ponemos la direccion http://127.0.0.1:8000/accounts/signup/ y registramos un usuario.
+
+	######## FUNCIONALIDAD ######## 
+
+Si accedemos a la página principal, vemos que tenemos un desplegable que permite navegar por las distintas secciones.
+Nos logueamos en LOGIN:
+*Si somos administradores:(tendremos que tener los permisos de administrador y habernos logueado, sino no podemos acceder)
+	 tendremos una seccion llamada ADMINISTRAR que nos permite añadir una nueva prenda. (de momento solo habilitado Categoría = chaqueta)
+*Tanto si somos usuarios normales como administradores: 
+	==> Si pinchamos en una seccion (de momento solo está habilitada Chaquetas) vemos que cargarán las chaquetas que sean del género elegido.

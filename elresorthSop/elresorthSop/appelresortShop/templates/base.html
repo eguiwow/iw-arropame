@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+        <!--{% csrf_token %}-->
+		<title>El Resort Shop</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+                            {% block cabecera %}{% endblock %}
+                            {% block banner %}{% endblock %}
+                            {% block seccion1 %}{% endblock %}
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="{% url 'index' %}">HOMEPAGE</a></li>
+										<li>
+											<span class="opener">HOMBRE</span>
+											<ul>
+												<li><a href="{% url 'chaquetasH' %}">Chaquetas</a></li>
+												<li><a href="#">Jerséis</a></li>
+												<li><a href="#">Sudaderas</a></li>
+												<li><a href="#">Camisas</a></li>
+												<li><a href="#">Camisetas</a></li>
+												<li><a href="#">Pantalones</a></li>
+												<li><a href="#">Bañadores y ropa de baño</a></li>
+											</ul>
+										</li>
+										<li>
+											<span class="opener">MUJER</span>
+											<ul>
+												<li><a href="{% url 'chaquetasM' %}">Chaquetas</a></li>
+												<li><a href="#">Jerséis</a></li>
+												<li><a href="#">Sudaderas</a></li>
+												<li><a href="#">Camisas</a></li>
+												<li><a href="#">Camisetas</a></li>
+												<li><a href="#">Pantalones</a></li>
+												<li><a href="#">Bañadores y ropa de baño</a></li>
+											</ul>
+										</li>
+										<!--<li>
+											<span class="opener">ACCESORIOS</span>
+											<ul>
+												<li><a href="#">Carteras</a></li>
+												<li><a href="#">Gorras y viseras</a></li>
+												<li><a href="#">Mochilas</a></li>
+												<li><a href="#">Relojes</a></li>
+											</ul>
+                                        </li>
+                                        -->
+										{%if ofertas %}
+											<li><a href="#">OFERTAS</a></li>
+										{%endif%}
+
+										{% csrf_token %}
+										{% if user.is_authenticated and user.is_staff %}
+											<li><a href="{% url 'administrar' %}">Administrar</a></li>
+										{% endif %}
+										{% if user.is_authenticated%}
+											<li><a href="/accounts/logout">Logout</a></li>
+											{%else%}
+											<li><a href="/accounts/login">Login</a></li>
+										{% endif %}
+										
+										  
+									</ul>
+								</nav>
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>CONTACTO</h2>
+									</header>
+									<ul class="contact">
+										<li class="icon solid fa-envelope">info@elresortshop.com</li>
+										<li class="icon solid fa-phone">+34 942 04 25 48</li>
+										<li class="icon solid fa-home">Calle Ardigales, 15<br />
+											Castro Urdiales, Cantabria, C.P. 39700</li>
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts 		"{% static '' %}"-->
+		
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src= "{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+
+	</body>
+</html>

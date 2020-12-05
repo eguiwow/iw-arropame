@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+		{% block cabecera %}
+		<!-- Header -->
+			<header id="header">
+				<h1 href="" class="logo"><strong>ADMINISTRAR SITIO</strong></h1>
+				
+			</header>
+		{% endblock %}
+		{% block seccion1 %}
+		<!-- Section -->
+			<section>
+					<form action="{% url 'anyadido' %}" method="post">
+					{% csrf_token %}
+					{{ form.as_p }} 
+					<input type="submit" value="Añadir producto" />
+					<input type="hidden" name="next" value="submit" />
+				</form>
+
+			</section>
+		{% endblock %}

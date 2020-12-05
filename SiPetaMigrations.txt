@@ -1,7 +1,0 @@
-Dentro de migrations están los scripts que hacen los cambios en la BD
-
--Al añadir, tablas, relaciones, campos nuevos puede petar la BD
---SOLUCIÓN: copiar la carpeta 'migrations' y con otro nombre p.ej. 'migrations_old'
--- cargarse la carpeta 'migrations'
--- cambiar nombre a 'db.sqlite2'
--- rehacer las migrations
