@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404, get_list_or_404
 from django.http import HttpResponse
-from .models import User, Oferta, Item, Producto
+from .models import User, Oferta, Item, Producto, Carrito, Cliente
 from .forms import ClientSignUpForm, itemForm
 from django.views.generic import CreateView
 from django.contrib.auth import login
@@ -42,6 +43,31 @@ def chaquetasM(request):
         
     context = {"lista_items": lista_items, "nombre_categoria": nom}
     return render(request, 'categorias.html', context)
+
+# Vista detalle a producto, hay que pasar el item y sus productos asociados (las tallas)
+def producto(request, item_id):
+    if request.user:
+        request.user.carrito = Carrito()
+        request.user.save()
+        carrito = request.user.carrito
+    else:
+        user = Cliente()
+        user.carrito = Carrito()
+        user.save()
+        carrito = user.carrito
+    item = get_object_or_404(Item, pk=item_id)
+    lista_productos = Producto.objects.filter(item__nombre = item.nombre)
+
+    context = {"lista_productos": lista_productos, "carrito": carrito, "item":item }
+    return render(request, 'producto.html', context)
+
+def carrito(request, producto_id):
+    carrito = request.user.carrito
+    producto_anyadir = Producto.get_object_or_404(pk=producto_id)
+    carrito.productos.add(producto_anyadir)
+    carrito.save()
+    context = {"carrito": carrito}
+    return render(request, 'carrito.html', context)
 
 
 class ClientSignUpView(CreateView):
