@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+		{% block cabecera %}
+		<!-- Header -->
+			<header id="header">
+				<h1 href="" class="logo"><strong>Prueba añadir CARRITO </strong></h1>
+				
+			</header>
+		{% endblock %}
+		{% block seccion1 %}
+		<!-- Section -->
+			<section>
+				<h1>Tu selección ha sido añadida al carrito</h1>
+                {% for p in carrito.productos %}
+                    <h3>p.id</h3>
+                    <h3>p.stock</h3>    
+                    <h3>p.talla</h3>        
+                {% endfor %}
+			</section>
+		{% endblock %}
