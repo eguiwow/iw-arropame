@@ -32,6 +32,28 @@ def chaquetasH(request):
     context = {"lista_items": lista_items, "nombre_categoria": nom}
     return render(request, 'categorias.html', context)
 
+def articulos(request, genero, tipo):
+    items = Item.objects.all()
+    lista_items = []
+
+    if genero == 'Hombre':
+        genero = 'M'
+    elif genero == 'Mujer':
+        genero = 'F'
+
+    if tipo == 'Jerseis':
+        tipo = 'Jerséis'
+    elif tipo == 'Banadores':
+        tipo = 'Bañadores y ropa de baño'
+   
+    for i in items:
+        if(i.categoria== tipo and i.genero == genero):
+            lista_items.append(i)
+    
+    context = {"lista_items": lista_items, "nombre_categoria": tipo}
+    return render(request, 'categorias.html', context)
+
+
 def chaquetasM(request):
     items = Item.objects.all()
     nom = "chaqueta"

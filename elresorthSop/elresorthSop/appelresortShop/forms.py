@@ -22,7 +22,7 @@ class itemForm(forms.Form):
     descripcion = forms.CharField(label = "Descripcion del producto", max_length=50) 
     
     ETIQUETAS = (
-        ('Chaqueta', 'Chaqueta'),
+        ('Chaquetas', 'Chaquetas'),
         ('Jerséis', 'Jerséis'),
         ('Sudaderas', 'Sudaderas'),
         ('Camisas', 'Camisas'),
