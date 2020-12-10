@@ -18,7 +18,7 @@
 		<section id="banner">
 			<div class="content">
 				<header>
-					<h1>Busqueda por: {{nombre_categoria}}<br /></h1>											
+					<h1>Búsqueda por: {{nombre_categoria}}<br /></h1>											
 				</header>
 			</div>
 		</section>
@@ -34,7 +34,7 @@
 				{% for i in lista_items %}
 				<article>
 					{% if i.imagen %}
-					<a href="#" class="image"><img src="{{ i.imagen.url }}" alt="" /></a>
+					<a href="{% url 'producto' i.id %}" class="image"><img src="{{ i.imagen.url }}" alt="" /></a>
 					{% endif %}
 					<h3>{{i.nombre }}</h3>
 					<p>{{i.descripcion}}</p>

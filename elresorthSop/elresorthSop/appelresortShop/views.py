@@ -22,18 +22,8 @@ def index(request):
     context = {"ofertas": hay_ofertas}
     return render(request, 'index.html', context)
 
-def chaquetasH(request):
-    items = Item.objects.all()
-    nom = "chaqueta"
-    lista_items = []
-    for i in items:
-        if(i.categoria=="Chaqueta" and i.genero =="M"):
-            lista_items.append(i)
-    
-    context = {"lista_items": lista_items, "nombre_categoria": nom}
-    return render(request, 'categorias.html', context)
-
 def articulos(request, genero, tipo):
+    print('articulos')
     items = Item.objects.all()
     lista_items = []
 
@@ -52,22 +42,11 @@ def articulos(request, genero, tipo):
             lista_items.append(i)
     
     context = {"lista_items": lista_items, "nombre_categoria": tipo}
-    return render(request, 'categorias.html', context)
-
-
-def chaquetasM(request):
-    items = Item.objects.all()
-    nom = "chaqueta"
-    lista_items = []
-    for i in items:
-        if(i.categoria=="Chaqueta" and i.genero =="F"):
-            lista_items.append(i)
-        
-    context = {"lista_items": lista_items, "nombre_categoria": nom}
-    return render(request, 'categorias.html', context)
+    return render(request, 'articulos.html', context)
 
 # Vista detalle a producto, hay que pasar el item y sus productos asociados (las tallas)
 def producto(request, item_id):
+    print('productos')
     if request.user:
         request.user.carrito = Carrito()
         request.user.save()
