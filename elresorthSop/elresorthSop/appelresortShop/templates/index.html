@@ -15,21 +15,18 @@
 	{% endblock %}
 	{% block banner %}
 	<!-- Banner -->
-		<section id="banner">
-			<div class="content">
-				<header>
-					<h1>EL RESORT SHOP<br /></h1>
-					<p>Tu tienda de moda</p>
-				</header>
-				<p>El Resort Shop es una tienda de ropa juvenil ubicada en Castro Urdiales.</p>
-			</div>
-			<div id="banner">
-				<img src="{% static 'images/inicio.jpeg' %}" alt="" />
-			</div>
-		</section>
-		
-		
-
+		<header class="masthead">
+            <div class="container d-flex h-100 align-items-center">
+                <div class="mx-auto text-center">
+					<h1 class="mx-auto text-center">EL RESORT SHOP</h1>
+					<h2 class="mx-auto text-center">- CASTRO URDIALES -</h2>
+			<!--		<p class="mx-auto text-center">El Resort Shop es una tienda de ropa juvenil ubicada en Castro Urdiales.</p>	-->
+					<a class="button text-center js-scroll-trigger" href="{% url 'index' %}">REGISTRATE PARA NO PERDERTE LAS NOVEDADES</a>
+                </div>
+            </div>
+        </header>
+	{% endblock %}
+	{% block novedades %}
 		<section>
 			<header class="major">
 				<h2>Novedades</h2>
