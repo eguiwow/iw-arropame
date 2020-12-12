@@ -38,7 +38,6 @@
 					{% endif %}
 					<h3>{{i.nombre }}</h3>
 					<p>{{i.descripcion}}</p>
-					<p>{{i.imagen}}</p>
 					<h4>{{i.precio}} €</h4>	
 					<ul class="actions">
 						<li><a href="{% url 'producto' i.id %}" class="button">Comprar</a></li>
@@ -49,7 +48,7 @@
 			{% else %}
 			<article>                                        
 				<h3>NO HAY ITEMS</h3>
-				<p>Actualmente no disponemos de artículos tipo 'chaqueta'.</p>
+				<p>Actualmente no disponemos de artículos tipo {{nombre_categoria}}.</p>
 			</article>
 
 			{% endif %}

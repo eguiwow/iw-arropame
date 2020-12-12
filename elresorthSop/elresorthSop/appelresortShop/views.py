@@ -10,16 +10,19 @@ from .decorators import staff_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.db.models import Max
 from datetime import date
 
 def index(request):
+    recientes = Item.objects.annotate(recentAddedItems = Max('fecha_insertado')   ) 
+    items_mas_recientes = Item.objects.filter(fecha_insertado__in=[i.recentAddedItems for i in recientes])
     ofertas = Oferta.objects.all()
     hay_ofertas = False
     for o in ofertas:
         if o.descuento != 1:
             hay_ofertas = True
 
-    context = {"ofertas": hay_ofertas}
+    context = {"ofertas": hay_ofertas, "novedades": items_mas_recientes}
     return render(request, 'index.html', context)
 
 def articulos(request, genero, tipo):
@@ -47,15 +50,15 @@ def articulos(request, genero, tipo):
 # Vista detalle a producto, hay que pasar el item y sus productos asociados (las tallas)
 def producto(request, item_id):
     print('productos')
-    if request.user:
-        request.user.carrito = Carrito()
-        request.user.save()
-        carrito = request.user.carrito
-    else:
-        user = Cliente()
-        user.carrito = Carrito()
-        user.save()
-        carrito = user.carrito
+    # if request.user:
+    #     request.user.carrito = Carrito()
+    #     request.user.save()
+    #     carrito = request.user.carrito
+    # else:
+    #     user = Cliente()
+    #     user.carrito = Carrito()
+    #     user.save()
+    #     carrito = user.carrito
     item = get_object_or_404(Item, pk=item_id)
     lista_productos = Producto.objects.filter(item__nombre = item.nombre)
 

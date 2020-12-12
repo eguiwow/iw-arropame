@@ -17,11 +17,11 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-                            {% block cabecera %}{% endblock %}
                             {% block banner %}{% endblock %}
 							{% block seccion1 %}{% endblock %}
-
 						</div>
+						{% block cabecera %}{% endblock %}
+
 					</div>
 
 				<!-- Sidebar -->
@@ -106,6 +106,7 @@
 						</div>
 					</div>
 
+
 			</div>
 
 		<!-- Scripts 		"{% static '' %}"-->
@@ -116,5 +117,8 @@
 			<script src= "{% static 'assets/js/util.js' %}"></script>
 			<script src="{% static 'assets/js/main.js' %}"></script>
 
+
+
 	</body>
+	
 </html>

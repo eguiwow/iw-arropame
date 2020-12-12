@@ -21,71 +21,43 @@
 					<h1>EL RESORT SHOP<br /></h1>
 					<p>Tu tienda de moda</p>
 				</header>
-				<p>El Resort Shop es una tienda de ropa juvenil ubicada en Castro Urdiales.
-
-				</p>
+				<p>El Resort Shop es una tienda de ropa juvenil ubicada en Castro Urdiales.</p>
 			</div>
-			<span class="image object">
+			<div id="banner">
 				<img src="{% static 'images/inicio.jpeg' %}" alt="" />
-			</span>
+			</div>
 		</section>
-	{% endblock %}
-	<!-- Section -->
-	{% block seccion1 %}
-	<!--<section>
-		<header class="major">
-			<h2>Novedades</h2>
-		</header>
-		<div class="posts">
-			<article>
-				<a href="#" class="image"><img src="{% static 'images/pic01.jpg' %}" alt="" /></a>
-				<h3>Interdum aenean</h3>
-				<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-				<ul class="actions">
-					<li><a href="#" class="button">More</a></li>
-				</ul>
-			</article>
-			<article>
-				<a href="#" class="image"><img src="{% static 'images/pic02.jpg' %}" alt="" /></a>
-				<h3>Nulla amet dolore</h3>
-				<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-				<ul class="actions">
-					<li><a href="#" class="button">More</a></li>
-				</ul>
-			</article>
-			<article>
-				<a href="#" class="image"><img src="{% static 'images/pic03.jpg' %}" alt="" /></a>
-				<h3>Tempus ullamcorper</h3>
-				<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-				<ul class="actions">
-					<li><a href="#" class="button">More</a></li>
-				</ul>
-			</article>
-			<article>
-				<a href="#" class="image"><img src="{% static 'images/pic04.jpg' %}" alt="" /></a>
-				<h3>Sed etiam facilis</h3>
-				<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-				<ul class="actions">
-					<li><a href="#" class="button">More</a></li>
-				</ul>
-			</article>
-			<article>
-				<a href="#" class="image"><img src="{% static 'images/pic05.jpg' %}" alt="" /></a>
-				<h3>Feugiat lorem aenean</h3>
-				<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-				<ul class="actions">
-					<li><a href="#" class="button">More</a></li>
-				</ul>
-			</article>
-			<article>
-				<a href="#" class="image"><img src="{% static 'images/pic06.jpg' %}" alt="" /></a>
-				<h3>Amet varius aliquam</h3>
-				<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-				<ul class="actions">
-					<li><a href="#" class="button">More</a></li>
-				</ul>
-			</article>
-		</div>
-	</section>
-	-->
+		
+		
+
+		<section>
+			<header class="major">
+				<h2>Novedades</h2>
+			</header>
+			<div class="posts">
+				{% if novedades %}
+					{% for i in novedades %}
+					<article>
+						<p style="color:Tomato;">NEW</p>
+						{% if i.imagen %}
+						<a href="{% url 'producto' i.id %}" class="image"><img src="{{ i.imagen.url }}" alt="" /></a>
+						{% endif %}
+						<h3>{{i.nombre }}</h3>
+						<p>{{i.descripcion}}</p>
+						<h4>{{i.precio}} €</h4>	
+						<ul class="actions">
+							<li><a href="{% url 'producto' i.id %}" class="button">Comprar</a></li>
+						</ul>
+					</article>
+	
+					{% endfor %}
+				{% else %}
+				<article>                                        
+					<h3>NO HAY ITEMS</h3>
+					<p>Actualmente no disponemos de novedades.</p>
+				</article>
+	
+				{% endif %}
+			</div>
+		</section>
 	{% endblock %}
