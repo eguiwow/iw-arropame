@@ -36,7 +36,7 @@
                 </ul>
                 <ul>
                     {% for p in lista_productos %} <!--TO-DO sacar desplegable de tallas-->
-                    <li><a href="{% url 'carrito' p.id %}" class="button">{{p.talla }} - {{p.stock}}</a>  </li>
+                    <li><a href="{% url 'carrito_anyadir' p.id %}" class="button">{{p.talla }} - {{p.stock}}</a>  </li>
                     {% endfor %}
     
                 </ul>

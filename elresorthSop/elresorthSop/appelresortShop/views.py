@@ -1,19 +1,26 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.http import HttpResponse
-from .models import User, Oferta, Item, Producto, Carrito, Cliente
+from .models import User, Oferta, Item, Producto, Carrito, Cliente, Tarjeta
 from .forms import ClientSignUpForm, itemForm
 from django.views.generic import CreateView
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
-from .decorators import staff_required
+from .decorators import staff_required, client_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.models import Max
 from datetime import date
 
+# Vista principal de EL RESORT SHOP con novedades y ofertas
 def index(request):
+    # Nos aseguramos de que exista una sesión en la que vamos a guardar datos relacionados con el carrito
+    if not request.session.session_key:
+        request.session.create()
+    print(request.session.session_key) # La clave de sesión
+
     recientes = Item.objects.annotate(recentAddedItems = Max('fecha_insertado')   ) 
     items_mas_recientes = Item.objects.filter(fecha_insertado__in=[i.recentAddedItems for i in recientes])
     ofertas = Oferta.objects.all()
@@ -25,8 +32,8 @@ def index(request):
     context = {"ofertas": hay_ofertas, "novedades": items_mas_recientes}
     return render(request, 'index.html', context)
 
+# Vista a artículos de un TIPO y un GÉNERO dados
 def articulos(request, genero, tipo):
-    print('articulos')
     items = Item.objects.all()
     lista_items = []
 
@@ -49,30 +56,91 @@ def articulos(request, genero, tipo):
 
 # Vista detalle a producto, hay que pasar el item y sus productos asociados (las tallas)
 def producto(request, item_id):
-    print('productos')
-    # if request.user:
-    #     request.user.carrito = Carrito()
-    #     request.user.save()
-    #     carrito = request.user.carrito
-    # else:
-    #     user = Cliente()
-    #     user.carrito = Carrito()
-    #     user.save()
-    #     carrito = user.carrito
     item = get_object_or_404(Item, pk=item_id)
     lista_productos = Producto.objects.filter(item__nombre = item.nombre)
-
-    context = {"lista_productos": lista_productos, "carrito": carrito, "item":item }
+    
+    context = {"lista_productos": lista_productos, "item":item }
     return render(request, 'producto.html', context)
 
-def carrito(request, producto_id):
-    carrito = request.user.carrito
-    producto_anyadir = Producto.get_object_or_404(pk=producto_id)
-    carrito.productos.add(producto_anyadir)
-    carrito.save()
-    context = {"carrito": carrito}
+# Visualiza los productos del carrito de un cliente
+@login_required #tenemos que estar logueados (y por ende registrados) 
+@client_required #NO podemos ser staff
+def carrito(request):
+    # Sacamos el carrito del cliente
+    cliente_id = request.user.id
+    cliente = Cliente.objects.get(pk=cliente_id)
+    carrito = cliente.carrito
+    lista_productos = Producto.objects.filter(carrito__id=carrito.id)
+    lista_items = []
+    subtotal = 0
+    for p in lista_productos:
+        item = Item.objects.get(producto__id = p.id)
+        print(item.nombre)
+        subtotal = subtotal + item.precio
+        print(subtotal)
+
+        # lista_items.append(item)
+        if item not in lista_items:
+            lista_items.append(item)
+        
+    context = {"lista_productos": lista_productos, "lista_items":lista_items, "subtotal":subtotal}
     return render(request, 'carrito.html', context)
 
+
+# Añade un producto dado y visualiza los productos del carrito de un cliente
+@login_required #tenemos que estar logueados (y por ende registrados) 
+@client_required #NO podemos ser staff
+def carrito_anyadir(request, producto_id):
+
+    cliente_id = request.user.id
+    cliente = Cliente.objects.get(pk=cliente_id)
+    carrito = cliente.carrito
+    producto_anyadir = Producto.objects.get(pk=producto_id)
+    carrito.productos.add(producto_anyadir)
+    carrito.save()
+    producto_anyadir.stock = producto_anyadir.stock-1 # Reducimos en 1 el stock de la prenda  ESTO SE DEBE HACER ANTES PARA CHEQUEAR que quedan artículos
+    producto_anyadir.save()
+    lista_productos = Producto.objects.filter(carrito__id=carrito.id)
+    lista_items = []
+    subtotal = 0
+    for p in lista_productos:
+        item = Item.objects.get(producto__id = p.id)
+        subtotal = subtotal + item.precio
+        print(subtotal)
+        # lista_items.append(item)
+        if item not in lista_items:
+            lista_items.append(item)
+        
+    context = {"lista_productos": lista_productos, "lista_items":lista_items, "subtotal":subtotal}
+
+    return render(request, 'carrito.html', context)
+
+def compra(request):
+    cliente_id = request.user.id
+    cliente = Cliente.objects.get(pk=cliente_id)
+    carrito = cliente.carrito
+    # AQUÍ HABRÍA QUE HACER OPERATORIA PARA COMPRAR
+
+    return render(request, 'compra.html')
+
+# Usar variables de SESIÓN:
+#--------------------------
+    # # Obtener un dato de la sesión por su clave (ej. 'my_car'), generando un KeyError si la clave no existe
+    # my_car = request.session['my_car']
+
+    # # Obtener un dato de la sesión, estableciendo un valor por defecto ('mini') si el dato requerido no existe
+    # my_car = request.session.get('my_car', 'mini')
+
+    # # Asignar un dato a la sesión
+    # request.session['my_car'] = 'mini'
+
+    # # Eliminar un dato de la sesión
+    # del request.session['my_car']
+
+
+
+# Vistas y clases de login/sign_up de usuarios
+#-------------------------------------
 
 class ClientSignUpView(CreateView):
     model = User
@@ -86,15 +154,16 @@ class ClientSignUpView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('') 
+        return redirect('index') 
 
+# Permite introducir nuevos items / productos en BD
 @login_required
-@staff_required
+@staff_required # HAY que ser staff
 def administrar(request):    
     form = itemForm()    
     return render(request, 'administrar.html', {'form' : form})
 
-
+# Recoge los datos del form y los guarda en BD
 @login_required
 @staff_required
 def anyadido(request):

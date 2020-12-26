@@ -4,18 +4,32 @@
 		{% block cabecera %}
 		<!-- Header -->
 			<header id="header">
-				<h1 href="" class="logo"><strong>Prueba añadir CARRITO </strong></h1>
 				
 			</header>
 		{% endblock %}
 		{% block seccion1 %}
 		<!-- Section -->
 			<section>
-				<h1>Tu selección ha sido añadida al carrito</h1>
-                {% for p in carrito.productos %}
-                    <h3>p.id</h3>
-                    <h3>p.stock</h3>    
-                    <h3>p.talla</h3>        
-                {% endfor %}
+				<h2>Tu Carrito</h2>
+				<h3>SUBTOTAL: {{subtotal}}€</h3>
+				<h3><a href="{% url 'compra' %}" class="button">Comprar</a></h3>
+
+				{% for i in lista_items %}
+				<ul>
+				{% if i.imagen %}
+					<a href="{% url 'producto' i.id %}" class="image"><img src="{{ i.imagen.url }}" alt="" /></a>
+					{% endif %}
+					<h3>{{i.nombre }}</h3>
+					<p>{{i.descripcion}}</p>
+					<h4>{{i.precio}} €</h4>	
+					<h4>Talla:</h4>
+					{% for p in lista_productos %}  
+						{% if p.item.id == i.id %}
+						<li>{{p.talla}}</li>
+						{% endif %}	      
+					{% endfor %}	      
+				</ul>
+				{% endfor %}
+
 			</section>
 		{% endblock %}
