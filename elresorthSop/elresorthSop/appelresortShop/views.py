@@ -32,6 +32,7 @@ def index(request):
     context = {"ofertas": hay_ofertas, "novedades": items_mas_recientes}
     return render(request, 'index.html', context)
 
+
 # Vista a artículos de un TIPO y un GÉNERO dados
 def articulos(request, genero, tipo):
     items = Item.objects.all()
@@ -116,9 +117,6 @@ def carrito_anyadir(request, producto_id):
     return render(request, 'carrito.html', context)
 
 def compra(request):
-    cliente_id = request.user.id
-    cliente = Cliente.objects.get(pk=cliente_id)
-    carrito = cliente.carrito
     # AQUÍ HABRÍA QUE HACER OPERATORIA PARA COMPRAR
 
     return render(request, 'compra.html')
@@ -158,7 +156,7 @@ class ClientSignUpView(CreateView):
         carrito.save()
         tarjeta = Tarjeta(nombre = "default", apellidos = "default", num_tarjeta = 123, cvv = 123, fecha_caducidad = date.today())
         tarjeta.save()
-        cliente = Cliente(user = user, carrito = carrito, tarjeta = tarjeta)
+        cliente = Cliente(user = user, mail = mail, carrito = carrito, tarjeta = tarjeta)
         cliente.save()
         
         login(self.request, user)
