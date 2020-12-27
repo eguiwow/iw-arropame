@@ -1,6 +1,7 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
+from django.forms import ModelForm
 from django.forms.utils import ValidationError
 from .models import User, Oferta, Coleccion, Item, Producto, Carrito, Tarjeta, Cliente, Pedido
 from datetime import date
@@ -16,8 +17,13 @@ class ClientSignUpForm(UserCreationForm):
             user.save()
         return user
 
+# class ItemForm(ModelForm):
+#     class Meta:
+#         model = Item
+#         fields = '__all__'
 
-class itemForm(forms.Form):
+
+class ItemForm(forms.Form):
     nombre = forms.CharField(label = "Introduce el nombre del producto", max_length=50)
     descripcion = forms.CharField(label = "Descripcion del producto", max_length=50) 
     

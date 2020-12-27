@@ -17,7 +17,7 @@
 				<form action="{% url 'anyadido' %}" method="post" enctype="multipart/form-data">
 					{% csrf_token %}
 					{{ form.as_p }} 
-					<input type="submit" value="Añadir producto" />
+					<input type="submit" value="Añadir imagen" />
 					<input type="hidden" name="next" value="submit" />
 				</form>
 
