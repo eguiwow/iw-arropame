@@ -21,13 +21,18 @@
 					<h1 class="mx-auto text-center">EL RESORT SHOP</h1>
 					<h2 class="mx-auto text-center">- CASTRO URDIALES -</h2>
 			<!--		<p class="mx-auto text-center">El Resort Shop es una tienda de ropa juvenil ubicada en Castro Urdiales.</p>	-->
-					<a class="button text-center js-scroll-trigger .align-items-center"  href="/accounts/signup">REGISTRATE PARA NO PERDERTE LAS NOVEDADES</a>
+					{% csrf_token %}
+					{% if user.is_authenticated%}
+						<a class="button text-center"  href="#novedades">DESCUBRE LAS NOVEDADES</a>
+					{%else%}
+						<a class="button text-center js-scroll-trigger"  href="/accounts/login">REGISTRATE PARA NO PERDERTE LAS NOVEDADES</a>
+					{% endif %}
                 </div>
             </div>
         </header>
 	{% endblock %}
 	{% block novedades %}
-		<section>
+		<section id =novedades>
 			<header class="major">
 				<h2>Novedades</h2>
 			</header>

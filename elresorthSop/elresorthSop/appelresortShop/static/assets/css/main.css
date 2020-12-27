@@ -999,6 +999,7 @@ header p {
   text-transform: uppercase; }
 
 header.major > :last-child {
+  padding-top: 2rem;
   border-bottom: solid 3px #f56a6a;       /* +++ BAARRAS DEBAJO DE LA SIDEBAR */
   display: inline-block;
   margin: 0 0 2em 0;
@@ -1186,6 +1187,11 @@ input[type="radio"] + label:before {
 .mx-auto {
   margin-right: auto !important;
 }
+
+.mt-auto,
+.my-auto {
+  margin-top: 10rem !important;
+}
 .text-center {
   text-align: center !important;
 }
@@ -1196,6 +1202,7 @@ input[type="radio"] + label:before {
 .container {
   min-width: 992px !important;
 }
+
 .container {
   width: 100%;
   padding-right: 0.75rem;
