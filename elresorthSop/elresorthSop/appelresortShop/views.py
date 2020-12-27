@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.http import HttpResponse
 from .models import User, Oferta, Item, Producto, Carrito, Cliente, Tarjeta
-from .forms import ClientSignUpForm, ItemForm, ImageForm
+from .forms import ClientSignUpForm, ItemForm
 from django.views.generic import CreateView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm

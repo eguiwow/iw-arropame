@@ -8,7 +8,6 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
-		<script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
 
 	</head>
 	<body class="is-preload">
@@ -84,8 +83,14 @@
 											{%else%}
 											<li><a href="/accounts/login">Login</a></li>
 										{% endif %}
-											<li><a href="{% url 'carrito' %}">Carrito</a></li>
-										  
+										<p>
+									 		<a href="{% url 'carrito' %}" >
+												<img alt="carrito" src="{% static 'images/cart.png' %}" width="50" height="50">
+											</a>
+										</p>
+									<!--
+										<li><a href="{% url 'carrito' %}">Carrito</a></li>
+									-->
 									</ul>
 								</nav>
 							<!-- Section -->
@@ -119,8 +124,6 @@
 			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
 			<script src= "{% static 'assets/js/util.js' %}"></script>
 			<script src="{% static 'assets/js/main.js' %}"></script>
-
-
 
 	</body>
 	
