@@ -22,6 +22,7 @@ class ClientSignUpForm(UserCreationForm):
 #         model = Item
 #         fields = '__all__'
 
+
 class ItemForm(forms.Form):
     nombre = forms.CharField(label = "Introduce el nombre del producto", max_length=50)
     descripcion = forms.CharField(label = "Descripcion del producto", max_length=50) 

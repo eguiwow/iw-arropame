@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.http import HttpResponse
 from .models import User, Oferta, Item, Producto, Carrito, Cliente, Tarjeta
-from .forms import ClientSignUpForm, ItemForm
+from .forms import ClientSignUpForm, ItemForm, ImageForm
 from django.views.generic import CreateView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -178,9 +178,9 @@ def anyadido(request):
             precio = form.cleaned_data.get("precio")
             color = form.cleaned_data.get("color")
             genero= form.cleaned_data.get("genero")            
-            #imagen = form.cleaned_data.get("imagen")
-        
-            imagen = request.FILES.get('file')
+            # Para obtener la imagen cambiamos el método
+            imagen = form.cleaned_data['imagen']
+            print(imagen.name)
 
             talla_xs1 = form.cleaned_data.get("stock_talla_xs")
             talla_s1 = form.cleaned_data.get("stock_talla_s")
@@ -209,6 +209,7 @@ def anyadido(request):
             producto5.save()
             producto6.save()
             return render(request, 'anyadido.html')
+        
         else:
             form = ItemForm()
             error = "Form is not valid"
@@ -219,6 +220,8 @@ def anyadido(request):
         return render(request, 'administrar.html', {'form' : form})
     return render(request, 'anyadido.html')
 
+  
+  
 
 
 # @login_required
