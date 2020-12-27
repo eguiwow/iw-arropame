@@ -130,6 +130,7 @@ em, i {
 p {
   margin: 0 0 2em 0; }
 
+
 h1, h2, h3, h4, h5, h6 {
   color: #3d4449;                     /* +++ COLOR DEL TITULO "EL RESORT SHOP" + aritculos + sidebar */
   font-family: "Roboto Slab", serif;
@@ -1682,6 +1683,13 @@ button,
   .button:disabled {
     pointer-events: none;
     opacity: 0.25; }
+
+.centrado{
+  margin-left: auto;
+  margin-right: auto;
+  display: table-cell;
+  vertical-align: middle
+}
 
 /* Mini Posts */
 .mini-posts article {
