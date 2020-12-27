@@ -7,6 +7,8 @@ from .models import User, Oferta, Coleccion, Item, Producto, Carrito, Tarjeta, C
 from datetime import date
 
 class ClientSignUpForm(UserCreationForm):
+    mail = forms.CharField(label = "Introduce el correo electronico", max_length=50)
+
     class Meta(UserCreationForm.Meta):
         model = User
 

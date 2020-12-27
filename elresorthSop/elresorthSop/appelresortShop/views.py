@@ -152,7 +152,15 @@ class ClientSignUpView(CreateView):
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
+        mail = form.cleaned_data.get("mail")
         user = form.save()
+        carrito = Carrito()
+        carrito.save()
+        tarjeta = Tarjeta(nombre = "default", apellidos = "default", num_tarjeta = 123, cvv = 123, fecha_caducidad = date.today())
+        tarjeta.save()
+        cliente = Cliente(user = user, carrito = carrito, tarjeta = tarjeta)
+        cliente.save()
+        
         login(self.request, user)
         return redirect('index') 
 

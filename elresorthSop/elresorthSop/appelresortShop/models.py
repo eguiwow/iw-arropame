@@ -93,8 +93,6 @@ class Tarjeta(models.Model):
 # class Cliente(models.User): No sé si va aquí o en django.contrib.auth
 class Cliente(models.Model):
         user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-        nombre = models.CharField(max_length=50, blank=True)
-        password = models.CharField(max_length = 50, blank=True)
         mail = models.EmailField(unique=True, blank=True)
         carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, blank = True)
         tarjeta = models.ForeignKey(Tarjeta, on_delete=models.CASCADE, blank = True)

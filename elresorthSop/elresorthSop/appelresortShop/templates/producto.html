@@ -4,13 +4,16 @@
 <!-- Header -->
 <header id="header">
     <a href="{% url 'index' %}" class="logo"><strong>EL RESORT SHOP</strong></a>
-    <ul class="icons">
-        <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-        <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-    </ul>
+    <div id = "app">
+        <ul class="icons">
+            <li v-for= "r in redes">
+                <a v-bind:href= "r.url" v-bind:class="r.class" target="_blank" ><span class="label"> [[r.label]]</span></a>
+            </li>
+        </ul>   
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src = "{% static 'assets/js/01.js' %}"></script>
 </header>
 {% endblock %}
 
@@ -24,33 +27,29 @@
     <div class="posts">
         {% if lista_productos %}
             <article>      
-            {% if item.imagen %}
-                <a href="#" class="image"><img src="{{ item.imagen.url }}" alt="" /></a>
-            {% endif %}
+                {% if item.imagen %}
+                    <a href="#" class="image"><img src="{{ item.imagen.url }}" alt="" /></a>
+                {% endif %}
                 <h3>{{item.nombre}}</h3>
                 <p>{{item.descripcion}}</p>
                 <h4>{{item.precio}} €</h4>	 
 
-                <form name="f1" action="/elresortShop/carrito/">
-                    <p>Seleccione una talla:</p>
-                    <select name="id">
-                        {% for p in lista_productos %} 
-                            {% if p.stock > 0 %}
-                                <option value={{p.id}}>{{p.talla }}</option>
-                            {% else %}
-                                <option value={{p.id}} disabled>{{p.talla }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                    <p></p>    
-                    <!-- Cantidad: por ahora se anyade de uno en uno
-                    <input type="number" id="quantity" name="quantity" min="1" max=5 value="1">
-                    <p></p>
-                    -->              
-                    <ul class="actions">
-                        <li><input type="submit" class="button" value="Comprar" ></li>
-                    </ul>                 
-                 </form>
+                <p>Seleccione una talla:</p>
+                
+                {% for p in lista_productos %} 
+                    {% if p.stock > 0 %}
+                        <li><a href="{% url 'carrito_anyadir' p.id %}" class="button">{{p.talla}}-{{p.stock}}</a>  </li>
+                    {% endif %}
+                {% endfor %}
+               
+                <p></p>    
+                <!-- Cantidad: por ahora se anyade de uno en uno
+                <input type="number" id="quantity" name="quantity" min="1" max=5 value="1">
+                <p></p>
+                -->              
+                            
+                 
+
 <!--
                 <ul class="actions">
                     <li><a href="#" class="button">Comprar</a></li>
@@ -70,14 +69,13 @@
 
                     TO-DO sacar desplegable de tallas
                   
-                    {% for p in lista_productos %} 
+                
 
-                        <li><a href="{% url 'carrito_anyadir' p.id %}" class="button">- {{p.stock}}</a>  </li>
-                    {% endfor %}
+                    
   -->
         
             </article>
-            {% else %}
+        {% else %}
         <article>                                        
             <h3>ESTE PRODUCTO YA NO ESTÁ DISPONIBLE</h3>
             <p>Actualmente no disponemos del artículo {{item.nombre}} </p>
