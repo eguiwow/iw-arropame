@@ -31,22 +31,24 @@
                 <p>{{item.descripcion}}</p>
                 <h4>{{item.precio}} €</h4>	 
 
-                <form action="/action_page.php">
+                <form name="f1" action="/elresortShop/carrito/">
                     <p>Seleccione una talla:</p>
-                    <select name="talla">
+                    <select name="id">
                         {% for p in lista_productos %} 
                             {% if p.stock > 0 %}
-                                <option value=p.talla>{{p.talla }}</option>
+                                <option value={{p.id}}>{{p.talla }}</option>
                             {% else %}
-                                <option value=p.talla disabled>{{p.talla }}</option>
+                                <option value={{p.id}} disabled>{{p.talla }}</option>
                             {% endif %}
                         {% endfor %}
                     </select>
-                    <p></p>                  
+                    <p></p>    
+                    <!-- Cantidad: por ahora se anyade de uno en uno
                     <input type="number" id="quantity" name="quantity" min="1" max=5 value="1">
                     <p></p>
+                    -->              
                     <ul class="actions">
-                        <li><a href="#" class="button">Comprar</a></li>
+                        <li><input type="submit" class="button" value="Comprar" ></li>
                     </ul>                 
                  </form>
 <!--
@@ -73,9 +75,7 @@
                         <li><a href="{% url 'carrito_anyadir' p.id %}" class="button">- {{p.stock}}</a>  </li>
                     {% endfor %}
   -->
-    
-                </ul>
-    
+        
             </article>
             {% else %}
         <article>                                        
