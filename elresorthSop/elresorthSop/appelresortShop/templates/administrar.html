@@ -10,6 +10,9 @@
 		{% endblock %}
 		{% block seccion1 %}
 		<!-- Section -->
+		{% if error %}
+		<h3>{{error}}</h3>
+		{% endif %}
 			<section>
 				<form action="{% url 'anyadido' %}" method="post">
 					{% csrf_token %}
